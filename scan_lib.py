@@ -138,7 +138,7 @@ def scan_path(URL,resultFile):
 def scan_File(URL,resultFile):
 	for url_path in readFile('./dict/tempFile.txt'):
 		exist_url = scan(URL+url_path.strip())
-		if exist_url == 'noFound' :
+		if exist_url[0:4] == 'this' :
 			print '[NotExist]'+exist_url
 			pass
 		else:
