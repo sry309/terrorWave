@@ -14,6 +14,15 @@ def formatPATH(url_input):
 	else:
 		return url_input+'/'
 
+# 拼接url，并避免url中出现//的情况
+def joinUrl(URL,PATH):
+	URL = formatPATH(URL)
+	if PATH[0] != '/':
+		PATH = '/'+PATH
+	else:
+		PATH = PATH
+	return URL+PATH
+
 #取响应码和内容的前N字节，创建签名
 def creatSign(status_code,content):
 	status_code = str(status_code)
@@ -126,7 +135,7 @@ def scan(URL):
 #扫描目录
 def scan_path(URL,resultFile):
 	for url_path in readFile('./dict/tempPath.txt'):
-		exist_url = scan(URL+formatPATH(url_path.strip()))
+		exist_url = scan(joinUrl(URL,url_path.strip()))
 		if exist_url[0:4] == 'this' :
 			print '[NotExist]'+exist_url
 			pass
@@ -137,7 +146,7 @@ def scan_path(URL,resultFile):
 #扫描文件
 def scan_File(URL,resultFile):
 	for url_path in readFile('./dict/tempFile.txt'):
-		exist_url = scan(URL+url_path.strip())
+		exist_url = scan(joinUrl(URL,url_path.strip()))
 		if exist_url[0:4] == 'this' :
 			print '[NotExist]'+exist_url
 			pass
